@@ -1,0 +1,180 @@
+#########################################################
+# AETHER / OmniRAG Multimodal RAG Requirements
+# Python 3.11 recommended
+#########################################################
+
+##############################
+# CORE NUMERICAL STACK
+##############################
+# IMPORTANT:
+# Keep NumPy pinned to avoid ABI breakages with sklearn/faiss.
+
+numpy==1.26.4
+scipy==1.15.3
+pandas==2.1.4
+scikit-learn==1.3.2
+faiss-cpu==1.13.2
+
+
+##############################
+# DOCUMENT / TEXT PROCESSING
+##############################
+pyyaml
+pypdf
+pdfplumber
+
+
+##############################
+# EMBEDDINGS / NLP
+##############################
+sentence-transformers
+transformers
+accelerate
+tiktoken
+einops
+
+
+##############################
+# BACKEND API
+##############################
+fastapi
+uvicorn
+python-multipart
+
+
+##############################
+# MULTIMODAL / VISION
+##############################
+open-clip-torch
+qwen-vl-utils
+Pillow
+
+# IMPORTANT:
+# Keep OpenCV pinned. Newer versions may drag NumPy 2.x.
+opencv-python==4.10.0.84
+
+
+##############################
+# AUDIO
+##############################
+openai-whisper
+
+
+##############################
+# LOCAL LLM
+##############################
+llama-cpp-python
+
+
+#########################################################
+# MANUAL / EXTERNAL INSTALLS (NOT INSTALLED BY pip -r)
+#########################################################
+
+# ======================================================
+# CUDA PYTORCH (INSTALL SEPARATELY)
+# Do NOT rely on plain pip for GPU build.
+# Install AFTER pip install -r requirements.txt
+# Official source:
+# https://pytorch.org/get-started/locally/
+#
+# Command:
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+#
+# Verified working versions:
+# torch 2.5.1+cu121
+# torchvision 0.20.1+cu121
+# torchaudio 2.5.1+cu121
+# ======================================================
+
+
+# ======================================================
+# MICROSOFT C++ BUILD TOOLS (Needed for llama-cpp-python)
+# Download from:
+# https://visualstudio.microsoft.com/visual-cpp-build-tools/
+#
+# Install these components:
+# - MSVC Build Tools x64/x86
+# - Windows SDK
+# - C++ CMake tools
+# ======================================================
+
+
+# ======================================================
+# PHI-3 GGUF MODEL (DOWNLOAD MANUALLY)
+# Source:
+# HuggingFace (Microsoft Phi-3 GGUF)
+# https://huggingface.co/
+#
+# Download file:
+# Phi-3-mini-4k-instruct-q4.gguf
+#
+# Put in:
+# models/Phi-3-mini-4k-instruct-q4.gguf
+# ======================================================
+
+
+# ======================================================
+# FFMPEG (INSTALL MANUALLY)
+# Source:
+# https://www.gyan.dev/ffmpeg/builds/
+#
+# Download:
+# ffmpeg-release-essentials.zip
+#
+# Extract example:
+# D:\ffmpeg\ffmpeg-8.1-essentials_build\bin\ffmpeg.exe
+#
+# Add bin folder to PATH.
+# Test:
+# ffmpeg -version
+# ======================================================
+
+
+#########################################################
+# OPTIONAL ENVIRONMENT RECOMMENDATIONS
+#########################################################
+
+# Put caches on non-system drive if desired:
+# set TMP=D:\temp
+# set TEMP=D:\temp
+# set PIP_CACHE_DIR=D:\pip_cache
+# set HF_HOME=D:\hf_cache
+
+
+#########################################################
+# IMPORTANT ONE-TIME COMPATIBILITY FIX
+#########################################################
+# If OpenCV ever upgrades NumPy to 2.x and breaks stack:
+#
+# pip uninstall opencv-python numpy -y
+# pip install numpy==1.26.4 opencv-python==4.10.0.84 --no-deps
+#########################################################
+```
+
+## Recommended install sequence for new users
+
+```bash
+# 1
+python -m venv venv
+
+# 2
+venv\Scripts\activate
+
+# 3
+pip install -r requirements.txt
+
+# 4
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+# 5
+Download Phi-3 GGUF model manually into models/
+
+# 6
+Install FFmpeg and add to PATH
+
+# 7
+Run
+uvicorn python-api.main:app --reload
+```
+
+This includes everything we discovered across the entire debugging process.
