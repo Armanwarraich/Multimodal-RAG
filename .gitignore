@@ -32,3 +32,5 @@ client/node_modules/
 .cache/
 *.gguf
 requirements_lock.txt
+*.log
+debug-*.log

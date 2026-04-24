@@ -1,6 +1,6 @@
 def recall_at_k(retrieved_chunks, relevant_phrases, k):
     """
-    Recall@k using phrase-level relevance.
+    Phrase-level Recall@k
     """
     retrieved_k = retrieved_chunks[:k]
 
@@ -15,3 +15,16 @@ def recall_at_k(retrieved_chunks, relevant_phrases, k):
         return 0.0
 
     return hits / len(relevant_phrases)
+
+
+def reciprocal_rank(retrieved_chunks, relevant_phrases):
+    """
+    Phrase-based reciprocal rank.
+    Finds rank of first relevant hit.
+    """
+    for rank, chunk in enumerate(retrieved_chunks, start=1):
+        for phrase in relevant_phrases:
+            if phrase.lower() in chunk.lower():
+                return 1 / rank
+
+    return 0.0
